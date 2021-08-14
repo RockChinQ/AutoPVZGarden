@@ -1,30 +1,66 @@
 package main.boot;
 
 import javax.swing.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.Arrays;
 
 public class PositionWindow extends JFrame {
-    JButton init=new JButton("Init");
+    JButton init=new JButton("Init"),timeWin=new JButton("timeWin");
     JComboBox<String> processSelect=new JComboBox<>();
     JButton exec=new JButton("Exec!");
+    JButton pause=new JButton("pause");
+    Thread gameThr=new Thread();
     public PositionWindow(){
         this.setBounds(300,300,300,300);
         this.setLayout(null);
         this.setAlwaysOnTop(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                setTitle(getWidth()+","+getHeight());
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+
+            }
+        });
 
         init.setBounds(20,20,120,30);
         init.addActionListener((e -> {
             try {
                 if (GUIMain.game != null)
                     GUIMain.game.dispose();
+                if (GUIMain.setting==null){
+                    throw new Exception("time setting window is null");
+                }
                 GUIMain.game = new Game(this.getLocation(), GUIMain.processMgr);
                 init.setText("Game:" + this.getLocation().x + "," + this.getLocation().y);
             }catch (Exception e0){
-                javax.swing.JOptionPane.showMessageDialog(null,"Err while init:\n"+ Arrays.toString(e0.getStackTrace()));
+//                javax.swing.JOptionPane.showMessageDialog(null,"Err while init:\n"+ Arrays.toString(e0.getStackTrace()));
+                e0.printStackTrace();
             }
         }));
         this.add(init);
+
+        timeWin.setBounds(150,20,120,30);
+        timeWin.addActionListener((e -> {
+            GUIMain.setting=this.getLocation();
+            timeWin.setText("timeWin:"+GUIMain.setting.x+","+GUIMain.setting.y);
+        }));
+        this.add(timeWin);
 
         for (String name:GUIMain.processMgr.processMap.keySet()){
             processSelect.addItem(name);
@@ -38,13 +74,21 @@ public class PositionWindow extends JFrame {
                 javax.swing.JOptionPane.showMessageDialog(null,"no game obj is initialized.");
                 return;
             }
-            try {
-                GUIMain.game.exec((String) processSelect.getSelectedItem());
-            }catch (Exception e0){
-                javax.swing.JOptionPane.showMessageDialog(null,"Err while exec:\n"+ Arrays.toString(e0.getStackTrace()));
-            }
+            this.gameThr=new Thread(()->{
+                try {
+                    GUIMain.game.exec((String) processSelect.getSelectedItem());
+                }catch (Exception e0){
+//                javax.swing.JOptionPane.showMessageDialog(null,"Err while exec:\n"+ Arrays.toString(e0.getStackTrace()));
+                    e0.printStackTrace();
+                }
+            });
+            this.gameThr.start();
         }));
         this.add(exec);
+
+        pause.setBounds(20,100,70,30);
+        pause.addActionListener((e)->{
+        });
 
         this.setVisible(true);
     }

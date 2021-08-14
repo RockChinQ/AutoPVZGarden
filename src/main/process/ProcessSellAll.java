@@ -9,14 +9,38 @@ public class ProcessSellAll implements IProcess{
     @Override
     public void process(Game game) throws Exception {
         System.out.println("Sell all");
-        Point selBtn=new Point(280,70);
+        Point selBtn=new Point(284,64);
         for (int i=0;i<8;i++){
             System.out.println("First Line:"+i);
             Point p1=new Point(111+i*85,155);
             game.clickTo(selBtn,p1);
-            Thread.sleep(500);
+            Thread.sleep(400);
             game.click(427,459);
-            Thread.sleep(1500);
+            Thread.sleep(800);
+        }
+        for (int i=0;i<8;i++){
+            System.out.println("Second Line:"+i);
+            Point p1=new Point(105+i*85+(i>1?20:0),230);
+            game.clickTo(selBtn,p1);
+            Thread.sleep(400);
+            game.click(427,459);
+            Thread.sleep(800);
+        }
+        for (int i=0;i<8;i++){
+            System.out.println("Third Line:"+i);
+            Point p1=new Point(83+i*85+(i>1?30:0),325);
+            game.clickTo(selBtn,p1);
+            Thread.sleep(400);
+            game.click(427,459);
+            Thread.sleep(800);
+        }
+        for (int i=0;i<8;i++){
+            System.out.println("Fourth Line:"+i);
+            Point p1=new Point(75+i*85+(i>1?45:0),433);
+            game.clickTo(selBtn,p1);
+            Thread.sleep(400);
+            game.click(427,459);
+            Thread.sleep(800);
         }
     }
 }
