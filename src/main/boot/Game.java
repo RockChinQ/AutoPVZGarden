@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.Date;
 
 public class Game {
-    Point position;
+    public Point position;
     ProcessMgr processMgr;
     public Robot robot;
     public Game(Point position,ProcessMgr processMgr)throws Exception{
@@ -45,8 +45,19 @@ public class Game {
     }
     public void clickTo(Point p0,Point p1){
         click(p0.x,p0.y);
+        robot.mouseMove(this.position.x+p1.x,this.position.y+p1.y);
         try {
-            Thread.sleep(350);
+            Thread.sleep(300);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        click(p1.x,p1.y);
+    }
+    public void clickToNoWait(Point p0,Point p1){
+
+        click(p0.x,p0.y);
+        try {
+            Thread.sleep(30);
         }catch (Exception e){
             e.printStackTrace();
         }

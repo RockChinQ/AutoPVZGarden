@@ -20,46 +20,61 @@ public class ProcessFeedAllBlindly implements IProcess{
         for (int i=0;i<8;i++){
             System.out.println("First Line:"+i);
             checkFertilizer(game);
-            Point p1=new Point(111+i*85,155);
+            Point p1=new Point(150+i*80,120);
             game.clickTo(selBtn,p1);
-            Thread.sleep(600);
+            Thread.sleep(50);
+            if (i==1){
+                Thread.sleep(1000);
+            }
         }
-        game.exec("collectGold");
+//        game.exec("collectGold");
 
         ProcessCollectGold.lineNum=1;
         for (int i=0;i<8;i++){
             System.out.println("Second Line:"+i);
             checkFertilizer(game);
-            Point p1=new Point(105+i*85+(i>1?20:0),230);
+            Point p1=new Point(150+i*80+(i>3?25:0),220);
             game.clickTo(selBtn,p1);
-            Thread.sleep(600);
+            Thread.sleep(30);
         }
-        game.exec("collectGold");
+//        game.exec("collectGold");
 
         ProcessCollectGold.lineNum=2;
         for (int i=0;i<8;i++){
             System.out.println("Third Line:"+i);
             checkFertilizer(game);
-            Point p1=new Point(83+i*85+(i>1?30:0),325);
+            Point p1=new Point(110+i*90+(i>3?20:0),314);
             game.clickTo(selBtn,p1);
-            Thread.sleep(600);
+            Thread.sleep(30);
         }
-        game.exec("collectGold");
+//        game.exec("collectGold");
 
         ProcessCollectGold.lineNum=3;
         for (int i=0;i<8;i++){
             System.out.println("Fourth Line:"+i);
             checkFertilizer(game);
-            Point p1=new Point(75+i*85+(i>1?45:0),433);
+            Point p1=new Point(105+i*90+(i>3?34:0),420);
             game.clickTo(selBtn,p1);
-            Thread.sleep(600);
+            Thread.sleep(30);
         }
+        Thread.sleep(700);
+
+        ProcessCollectGold.lineNum=0;
         game.exec("collectGold");
+        ProcessCollectGold.lineNum=1;
+        game.exec("collectGold");
+        ProcessCollectGold.lineNum=2;
+        game.exec("collectGold");
+        ProcessCollectGold.lineNum=3;
+        game.exec("collectGold");
+//        game.exec("collectGold");
     }
     public void checkFertilizer(Game game)throws Exception{
         if (!GUIMain.fertilizer(game)){
-            Thread.sleep(700);
+            Thread.sleep(1400);
+            ProcessCollectGold.fromZero=true;
             game.exec("collectGold");
+            ProcessCollectGold.fromZero=false;
             game.exec("buyFertilizer");
         }
     }
