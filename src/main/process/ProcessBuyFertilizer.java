@@ -13,7 +13,7 @@ public class ProcessBuyFertilizer implements IProcess{
             System.out.println("Buying fertilizer:"+i);
             game.click(400,378);
             Thread.sleep(300);
-            game.click(311,393);
+            game.click(311,422);
             Thread.sleep(300);
         }
         game.click(441,582);

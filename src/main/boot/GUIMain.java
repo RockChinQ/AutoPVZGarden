@@ -19,6 +19,7 @@ public class GUIMain {
         processMgr.add("sellAll", new ProcessSellAll());
         processMgr.add("collectGold", new ProcessCollectGold());
         processMgr.add("plantFlowers", new ProcessPlantFlowers());
+        processMgr.add("changeDate",new ProcessChangeDate());
 
         new PositionWindow();
     }
@@ -39,7 +40,7 @@ public class GUIMain {
             e.printStackTrace();
         }
         System.out.println("Click day combo box");
-        game.robot.mouseMove(setting.x+276,setting.y+233);
+        game.robot.mouseMove(setting.x+276,setting.y+330);
         game.robot.mousePress(InputEvent.BUTTON1_MASK);
         try{
             Thread.sleep(10);
@@ -56,7 +57,7 @@ public class GUIMain {
         if (deltaDay==0){
 
             System.out.println("Next day");
-            game.robot.mouseMove(setting.x+270,setting.y+266);
+            game.robot.mouseMove(setting.x+270,setting.y+365);
             game.robot.mousePress(InputEvent.BUTTON1_MASK);
             try{
                 Thread.sleep(10);
@@ -68,7 +69,7 @@ public class GUIMain {
         }else {
 
             System.out.println("Previous day");
-            game.robot.mouseMove(setting.x+276,setting.y+200);
+            game.robot.mouseMove(setting.x+276,setting.y+293);
             game.robot.mousePress(InputEvent.BUTTON1_MASK);
             try{
                 Thread.sleep(10);
@@ -84,7 +85,7 @@ public class GUIMain {
         }catch (Exception e){
             e.printStackTrace();
         }
-        game.robot.mouseMove(setting.x+430,setting.y+405);
+        game.robot.mouseMove(setting.x+430,setting.y+515);
         game.robot.mousePress(InputEvent.BUTTON1_MASK);
         try{
             Thread.sleep(10);

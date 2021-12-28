@@ -3,13 +3,12 @@ package main.boot;
 import javax.swing.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.util.Arrays;
 
 public class PositionWindow extends JFrame {
     JButton init=new JButton("Init"),timeWin=new JButton("timeWin");
     JComboBox<String> processSelect=new JComboBox<>();
     JButton exec=new JButton("Exec!");
-    JButton pause=new JButton("pause");
+    JButton emergence =new JButton("Emergence");
     Thread gameThr=new Thread();
     public PositionWindow(){
         this.setBounds(300,300,300,300);
@@ -86,9 +85,13 @@ public class PositionWindow extends JFrame {
         }));
         this.add(exec);
 
-        pause.setBounds(20,100,70,30);
-        pause.addActionListener((e)->{
+        emergence.setBounds(20,100,170,30);
+        emergence.addActionListener((e)->{
+            System.out.println("Emergence!");
+            this.gameThr.stop();
+            System.out.println("Stopped.");
         });
+        this.add(emergence);
 
         this.setVisible(true);
     }

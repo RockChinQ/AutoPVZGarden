@@ -9,6 +9,7 @@ public class ProcessSellAll implements IProcess{
     @Override
     public void process(Game game) throws Exception {
         System.out.println("Sell all");
+        game.click(16,71);
         Point selBtn=new Point(342,64);
         for (int i=0;i<8;i++){
             System.out.println("First Line:"+i);
