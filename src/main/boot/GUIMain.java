@@ -5,11 +5,14 @@ import main.process.*;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
+import java.util.Date;
+import java.util.Timer;
 
 public class GUIMain {
     public static Game game;
     public static ProcessMgr processMgr=new ProcessMgr();
     public static Point setting;
+    public static AddingTimer addingTimer=new AddingTimer();
     public static void main(String[] args) {
         processMgr.add("test",new ProcessTest());
         processMgr.add("buyFlowers",new ProcessBuyFlowers());
@@ -22,6 +25,8 @@ public class GUIMain {
         processMgr.add("changeDate",new ProcessChangeDate());
 
         new PositionWindow();
+
+        new Timer().schedule(addingTimer,new Date(),1000);
     }
     public static int deltaDay=0;
     public static void changeDate(){

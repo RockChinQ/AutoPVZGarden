@@ -16,10 +16,10 @@ public class Game {
     }
 
     public void exec(String name)throws Exception{
-        long now=new Date().getTime();
+        long now=GUIMain.addingTimer.getTime();
         System.out.println("EEEEEEEExecuting:"+name+";");
         this.processMgr.get(name).process(this);
-        System.out.println("EEEEEEEEEExecuted:"+name+" spent:"+(new Date().getTime()-now));
+        System.out.println("EEEEEEEEEExecuted:"+name+" spent:"+(GUIMain.addingTimer.getTime()-now)+"s");
     }
 
     public void dispose(){
