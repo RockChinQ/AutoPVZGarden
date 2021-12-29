@@ -12,23 +12,23 @@ public class ProcessWaterBlindly implements IProcess {
         for (int i=0;i<5;i++){
             System.out.println("First Line");
             game.clickToNoWait(waterPot,new Point(149,195));
-//            Thread.sleep(10);
+//            Game.sleep(10);
             game.clickToNoWait(waterPot,new Point(320,190));
-//            Thread.sleep(50);
+//            Game.sleep(50);
             game.clickToNoWait(waterPot,new Point(497,190));
-//            Thread.sleep(50);
+//            Game.sleep(50);
             game.clickToNoWait(waterPot,new Point(658,190));
-//            Thread.sleep(50);
+//            Game.sleep(50);
 
             System.out.println("Second Line");
             game.clickToNoWait(waterPot,new Point(138,390));
-//            Thread.sleep(50);
+//            Game.sleep(50);
             game.clickToNoWait(waterPot,new Point(315,390));
-//            Thread.sleep(50);
+//            Game.sleep(50);
             game.clickToNoWait(waterPot,new Point(520,390));
-//            Thread.sleep(50);
+//            Game.sleep(50);
             game.clickToNoWait(waterPot,new Point(694,390));
-            Thread.sleep(1200);
+            Game.sleep(1200);
 
             ProcessCollectGold.lineNum=0;
             game.exec("collectGold");
@@ -40,7 +40,7 @@ public class ProcessWaterBlindly implements IProcess {
             ProcessCollectGold.lineNum=3;
             game.exec("collectGold");
 
-            Thread.sleep(15000);
+            Game.sleep(15000);
         }
     }
 }

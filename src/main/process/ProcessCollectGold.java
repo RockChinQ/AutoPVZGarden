@@ -24,9 +24,9 @@ public class ProcessCollectGold implements IProcess{
                 for (int j=30;j<770;j+=25){
                     game.robot.mouseMove(game.position.x+j,game.position.y+y);
                     game.robot.mousePress(InputEvent.BUTTON1_MASK);
-                    Thread.sleep(3);
+                    Game.sleep(3);
                     game.robot.mouseRelease(InputEvent.BUTTON1_MASK);
-//            Thread.sleep(5);
+//            Game.sleep(5);
                 }
             }
         }else {
@@ -43,9 +43,9 @@ public class ProcessCollectGold implements IProcess{
             for (int i = 30; i < 770; i += 25) {
                 game.robot.mouseMove(game.position.x + i, game.position.y + y);
                 game.robot.mousePress(InputEvent.BUTTON1_MASK);
-                Thread.sleep(3);
+                Game.sleep(3);
                 game.robot.mouseRelease(InputEvent.BUTTON1_MASK);
-//            Thread.sleep(5);
+//            Game.sleep(5);
             }
         }
     }

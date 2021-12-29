@@ -3,10 +3,10 @@ package main.boot;
 import java.util.TimerTask;
 
 public class AddingTimer extends TimerTask {
-    private long time=0;
+    private static long time=0;
 
-    public long getTime() {
-        return time;
+    public static long getTime() {
+        return time*GUIMain.TIMER_DELAY;
     }
 
     @Override

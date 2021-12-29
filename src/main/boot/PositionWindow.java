@@ -8,7 +8,8 @@ public class PositionWindow extends JFrame {
     JButton init=new JButton("Init"),timeWin=new JButton("timeWin");
     JComboBox<String> processSelect=new JComboBox<>();
     JButton exec=new JButton("Exec!");
-    JButton emergence =new JButton("Emergence");
+    JButton emergence =new JButton("Emergence Stop");
+    JButton pause =new JButton("Pause");
     Thread gameThr=new Thread();
     public PositionWindow(){
         this.setBounds(300,300,300,300);
@@ -92,6 +93,21 @@ public class PositionWindow extends JFrame {
             System.out.println("Stopped.");
         });
         this.add(emergence);
+
+        pause.setBounds(20,140,170,30);
+        pause.addActionListener((e)->{
+            if (!Game.pause){
+                Game.pause=true;
+                Game.paused=false;
+            }else {
+                if (Game.paused){
+                    synchronized (Game.pauseLock){
+                        Game.pauseLock.notify();
+                    }
+                }
+            }
+        });
+        this.add(pause);
 
         this.setVisible(true);
     }

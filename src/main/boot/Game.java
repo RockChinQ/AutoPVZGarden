@@ -16,10 +16,10 @@ public class Game {
     }
 
     public void exec(String name)throws Exception{
-        long now=GUIMain.addingTimer.getTime();
+        long now=new Date().getTime();
         System.out.println("EEEEEEEExecuting:"+name+";");
         this.processMgr.get(name).process(this);
-        System.out.println("EEEEEEEEEExecuted:"+name+" spent:"+(GUIMain.addingTimer.getTime()-now)+"s");
+        System.out.println("EEEEEEEEEExecuted:"+name+" spent:"+(new Date().getTime()-now)+"ms");
     }
 
     public void dispose(){
@@ -68,5 +68,24 @@ public class Game {
         rect.x+=this.position.x;
         rect.y+=this.position.y;
         return robot.createScreenCapture(rect);
+    }
+
+    public static boolean pause=false,paused=false;
+    public static final Boolean pauseLock=false;
+    public static void sleep(long mills)throws Exception{
+        if (pause){
+            synchronized (pauseLock){
+                try {
+                    paused=true;
+                    GUIMain.positionWindow.pause.setText("Resume");
+                    pauseLock.wait();
+                    GUIMain.positionWindow.pause.setText("Pause");
+                    pause=false;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        Thread.sleep(mills);
     }
 }

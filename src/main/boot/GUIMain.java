@@ -13,6 +13,8 @@ public class GUIMain {
     public static ProcessMgr processMgr=new ProcessMgr();
     public static Point setting;
     public static AddingTimer addingTimer=new AddingTimer();
+    public static PositionWindow positionWindow;
+    public static final long TIMER_DELAY=100;
     public static void main(String[] args) {
         processMgr.add("test",new ProcessTest());
         processMgr.add("buyFlowers",new ProcessBuyFlowers());
@@ -24,48 +26,61 @@ public class GUIMain {
         processMgr.add("plantFlowers", new ProcessPlantFlowers());
         processMgr.add("changeDate",new ProcessChangeDate());
 
-        new PositionWindow();
+        positionWindow=new PositionWindow();
 
-        new Timer().schedule(addingTimer,new Date(),1000);
+//        new Timer().schedule(addingTimer,new Date(),TIMER_DELAY);
     }
     public static int deltaDay=0;
     public static void changeDate(){
         game.robot.mouseMove(setting.x+400,setting.y+500);
         game.robot.mousePress(InputEvent.BUTTON1_MASK);
         try{
-            Thread.sleep(10);
+            Game.sleep(10);
         }catch (Exception e){
             e.printStackTrace();
         }
         game.robot.mouseRelease(InputEvent.BUTTON1_MASK);
 
+        //Wait for dialog to appear
+
+        GUIMain.waitTill(()->{
+            BufferedImage image=game.robot.createScreenCapture(new Rectangle(GUIMain.setting.x+380,GUIMain.setting.y+390,2,2));
+            return new Color(image.getRGB(0,0)).getRed()<150;
+        },100);
+
         try{
-            Thread.sleep(3000);
+            Game.sleep(100);
         }catch (Exception e){
             e.printStackTrace();
         }
+
+
         System.out.println("Click day combo box");
         game.robot.mouseMove(setting.x+276,setting.y+330);
         game.robot.mousePress(InputEvent.BUTTON1_MASK);
         try{
-            Thread.sleep(10);
+            Game.sleep(10);
         }catch (Exception e){
             e.printStackTrace();
         }
         game.robot.mouseRelease(InputEvent.BUTTON1_MASK);
 
         try{
-            Thread.sleep(800);
+            Game.sleep(800);
         }catch (Exception e){
             e.printStackTrace();
         }
         if (deltaDay==0){
 
+            GUIMain.waitTill(()->{
+                BufferedImage image=game.robot.createScreenCapture(new Rectangle(GUIMain.setting.x+300,GUIMain.setting.y+377,2,2));
+                return new Color(image.getRGB(0,0)).getBlue()<70;
+            },100);
             System.out.println("Next day");
             game.robot.mouseMove(setting.x+270,setting.y+365);
             game.robot.mousePress(InputEvent.BUTTON1_MASK);
             try{
-                Thread.sleep(10);
+                Game.sleep(10);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -73,11 +88,15 @@ public class GUIMain {
             deltaDay=1;
         }else {
 
+            GUIMain.waitTill(()->{
+                BufferedImage image=game.robot.createScreenCapture(new Rectangle(GUIMain.setting.x+300,GUIMain.setting.y+300,2,2));
+                return new Color(image.getRGB(0,0)).getBlue()<70;
+            },100);
             System.out.println("Previous day");
             game.robot.mouseMove(setting.x+276,setting.y+293);
             game.robot.mousePress(InputEvent.BUTTON1_MASK);
             try{
-                Thread.sleep(10);
+                Game.sleep(10);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -86,14 +105,14 @@ public class GUIMain {
         }
 
         try{
-            Thread.sleep(500);
+            Game.sleep(500);
         }catch (Exception e){
             e.printStackTrace();
         }
         game.robot.mouseMove(setting.x+430,setting.y+515);
         game.robot.mousePress(InputEvent.BUTTON1_MASK);
         try{
-            Thread.sleep(10);
+            Game.sleep(10);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -118,6 +137,19 @@ public class GUIMain {
         }else {
             System.out.println("Remains fertilizer"+darkCount);
             return true;
+        }
+    }
+
+    public static void waitTill(IChecker checker,long checkPeriod){
+        while (true){
+            try{
+                Game.sleep(checkPeriod);
+                if (checker.check()){
+                    return;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 

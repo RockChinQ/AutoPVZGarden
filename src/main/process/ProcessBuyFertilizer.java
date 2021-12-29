@@ -8,13 +8,13 @@ public class ProcessBuyFertilizer implements IProcess{
     public void process(Game game) throws Exception {
 
         game.click(771,94);
-        Thread.sleep(1500);
+        Game.sleep(1500);
         for (int i=0;i<4;i++){
             System.out.println("Buying fertilizer:"+i);
             game.click(400,378);
-            Thread.sleep(300);
+            Game.sleep(300);
             game.click(311,422);
-            Thread.sleep(300);
+            Game.sleep(300);
         }
         game.click(441,582);
     }
