@@ -3,6 +3,8 @@ package main.boot;
 import javax.swing.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class PositionWindow extends JFrame {
     JButton init=new JButton("Init"),timeWin=new JButton("timeWin");
@@ -10,9 +12,10 @@ public class PositionWindow extends JFrame {
     JButton exec=new JButton("Exec!");
     JButton emergence =new JButton("Emergence Stop");
     JButton pause =new JButton("Pause");
+    JTextField times=new JTextField("1");
     Thread gameThr=new Thread();
     public PositionWindow(){
-        this.setBounds(300,300,300,300);
+        this.setBounds(300,300,320,300);
         this.setLayout(null);
         this.setAlwaysOnTop(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +79,15 @@ public class PositionWindow extends JFrame {
             }
             this.gameThr=new Thread(()->{
                 try {
-                    GUIMain.game.exec((String) processSelect.getSelectedItem());
+                    int times=1;
+                    try {
+                        times = Integer.parseInt(GUIMain.positionWindow.times.getText());
+                    }catch (Exception e0){
+                        GUIMain.positionWindow.times.setText("1");
+                    }
+                    for (int i=0;i<times;i++){
+                        GUIMain.game.exec((String) processSelect.getSelectedItem());
+                    }
                 }catch (Exception e0){
 //                javax.swing.JOptionPane.showMessageDialog(null,"Err while exec:\n"+ Arrays.toString(e0.getStackTrace()));
                     e0.printStackTrace();
@@ -85,6 +96,29 @@ public class PositionWindow extends JFrame {
             this.gameThr.start();
         }));
         this.add(exec);
+
+        times.setBounds(230,60,40,30);
+        times.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (!(Character.isDigit(e.getKeyChar())|| e.getKeyChar()==KeyEvent.VK_BACK_SPACE || e.getKeyChar()==KeyEvent.VK_DELETE)){
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.isControlDown()){
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+        this.add(times);
 
         emergence.setBounds(20,100,170,30);
         emergence.addActionListener((e)->{
